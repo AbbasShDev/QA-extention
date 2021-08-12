@@ -2,60 +2,8 @@
   <head>
     <meta charset="utf-8">
     <title>Q&A</title>
-    <link rel="stylesheet" href="popupt.css">
   </head>
   <body>
-    <div class="container">
-      <h2>Ask about any thing in the page</h2>
-      <form id="askOpenaiForm">
-        <div class="form-control">
-          <label for="question">Your Question</label>
-          <input
-            type="text"
-            name="question"
-            id="question"
-            placeholder="Ask Your Question"
-            autofocus
-          />
-        </div>
-        <input type="submit" value="Ask" class="btn btn-block" />
-      </form>
-      <hr />
-      <div
-        id="askOpenaiResult"
-        style="display: block; margin: 20px auto auto auto"
-      >
-    </div>
-      <svg
-        style="display: none; margin: auto"
-        version="1.1"
-        id="askOpenaiLoader"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        x="0px"
-        y="0px"
-        width="70"
-        heigth="70"
-        viewBox="0 0 100 100"
-        enable-background="new 0 0 0 0"
-        xml:space="preserve"
-      >
-        <path
-          fill="#000"
-          d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50"
-        >
-          <animateTransform
-            attributeName="transform"
-            attributeType="XML"
-            type="rotate"
-            dur="1s"
-            from="0 50 50"
-            to="360 50 50"
-            repeatCount="indefinite"
-          />
-        </path>
-      </svg>
-    </div>
     <script src="popout.js"></script>
   </body>
 </html>

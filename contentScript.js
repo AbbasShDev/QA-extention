@@ -1,86 +1,28 @@
-// chrome.runtime.onMessage.addListener((msg, sender, response) => {
+chrome.runtime.sendMessage({ text: "what is my tab_id?" }, (tabId) => {
+  let tabIdString = tabId.toString();
 
-//   if(msg.command == "runCommands"){
-//     console.log('start commands');
-//     window.ScraperExt = [];
-//     var scrapeObj = msg.data;
-//     getNextItem(scrapeObj, 0);
+  chrome.storage.local.get(function (result) {
+    const prevlUrl = result[tabIdString];
+    const currentUrl = window.location.href;
 
-//   }
+    const prevParsed = new URL(prevlUrl);
+    const currentParsed = new URL(currentUrl);
 
-// });
+    if (
+      prevParsed.hostname === "www.google.com" &&
+      currentParsed.hostname !== "www.google.com"
+    ) {
+      let queryArray = prevParsed.searchParams.get("q").split(" ");
 
-// function getNextItem(obj, index){
+      queryArray.push(prevParsed.searchParams.get("q"));
 
-//   if(typeof obj[index] !== 'undefined') {
+      var pageMarker = new Mark(document.querySelector("body"));
 
-//     if(obj[index].type == 'click'){
-//       clickEvent(obj, index);
-//     }
+      pageMarker.mark(queryArray);
+    }
+  });
 
-//     if(obj[index].type == 'wait'){
-//       waitEvent(obj, index);
-//     }
-
-//     if(obj[index].type == 'save'){
-//       saveEvent(obj, index);
-//     }
-
-//     if(obj[index].type == 'enter'){
-//       enterEvent(obj, index);
-//     }
-
-//   }else{
-//     //send a return ...
-//     console.log('run complete');
-//     chrome.runtime.sendMessage({command:"run-complete", data: window.ScraperExt});
-//   }
-
-// }
-
-// function waitEvent(obj, index){
-//   var item = obj[index];
-//   var waitTime = parseInt(item.one);
-//   setTimeout(function(){
-//     getNextItem(obj, (index+1));
-//   }, waitTime);
-
-// }
-
-// function clickEvent(obj, index){
-//   var item = obj[index];
-//   document.querySelector(item.one).click();
-//   getNextItem(obj, (index+1));
-// }
-
-// function saveEvent(obj, index){
-//   var item = obj[index];
-//   var value = document.querySelector(item.one).innerText;
-//   window.ScraperExt.push(value);
-//   getNextItem(obj, (index+1));
-
-// }
-// function enterEvent(obj, index){
-//   var item = obj[index];
-//   var value = document.querySelector(item.one).value = item.two;
-//   getNextItem(obj, (index+1));
-
-// }
-
-let pragraphs = "";
-
-d3.map(d3.selectAll("p"), (x, i) => {
-  if (x.innerText.length > 0) {
-    pragraphs += x.innerText;
-  }
-});
-
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-  switch (message.type) {
-    case "getPragraphs":
-      sendResponse(pragraphs);
-      break;
-    default:
-      console.error("Unrecognised message: ", message);
-  }
+  var tabIdToUrl = {};
+  tabIdToUrl[tabIdString] = window.location.href;
+  chrome.storage.local.set(tabIdToUrl);
 });

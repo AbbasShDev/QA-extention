@@ -1,28 +1,28 @@
 {
-  "name": "Q&A",
+  "name": "Highlight google search",
   "version": "0.01",
-  "description": "Ask about any thing in the page",
-  "permissions": ["<all_urls>"],
+  "description": "Highlight google search",
+  "background": {
+    "persistent": true,
+    "scripts": ["background.js"]
+  },
+  "permissions": [
+    "<all_urls>",
+    "webNavigation",
+    "storage",
+    "tabs",
+    "activeTab"
+  ],
   "browser_action": {
-    "default_title": "Q&A",
+    "default_title": "Highlight google search",
     "default_popup": "popout.html"
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["d3.v7.min.js", "contentScript.js"],
+      "js": ["mark.min.js", "contentScript.js"],
       "run_at": "document_end"
     }
   ],
-  "manifest_version": 2,
-  "commands": {
-    "_execute_browser_action": {
-      "suggested_key": {
-        "default": "Alt+Q",
-        "linux": "Alt+Q",
-        "windows": "Alt+Q",
-        "mac": "Alt+Q"
-      }
-    }
-  }
+  "manifest_version": 2
 }
